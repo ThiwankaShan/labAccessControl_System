@@ -1,3 +1,5 @@
+## facedetection module
+
 import face_recognition as fr
 import cv2
 import os 
@@ -5,22 +7,10 @@ import time
 import numpy as np
 
 directory = "new_faces/"
-cap = cv2.VideoCapture("video/video.mp4") 
-
-def main():
-    
-    is_newUsers=str(input("are there any new users? \nEnter y to yes \nEnter n to No\n"))
-
-    if is_newUsers.lower()=='y':
-        resetFiles()
-        load_newFaces()
-        recognize_faces()
-    
-    elif is_newUsers.lower()=='n':
-        recognize_faces()
-    
+cap = cv2.VideoCapture("video/video.mp4")
 
 def load_newFaces():
+    ## read new user images and store encodes in the encodes.npz file and user names in names.npz file
     known_faces=[]
     known_names=[]
     for fileName in os.listdir(directory):
@@ -28,7 +18,7 @@ def load_newFaces():
         ## encoding images of new faces (filetype=jpg)
         known_image = fr.load_image_file(f"new_faces/{fileName}")
         known_encoding = fr.face_encodings(known_image)[0]
-        print(f'known_encoding : \n {known_encoding}')
+        ##print(f'known_encoding : \n {known_encoding}')
         
         
         ## moving face images from new_faces to known_faces 
@@ -44,6 +34,8 @@ def load_newFaces():
     np.savez('names.npz',known_names)
 
 def get_knownFaces():
+    ## Loads encodes saved in encodes.npz into knwown_faceEncodes list  
+
     known_faceEncodes=[]
 
     ## reading 'encodes.npz' to load known face encodes
@@ -52,11 +44,13 @@ def get_knownFaces():
     for arrays in data:
         for array in arrays:
             known_faceEncodes.append(array)
-    print(f"known faces encodes from file : \n{known_faceEncodes}")
+    ##print(f"known faces encodes from file : \n{known_faceEncodes}")
 
     return known_faceEncodes
 
 def get_knownNames():
+    ## Loads known names in names.npz into known_namaes list
+
     known_names=[]
 
     ## reading 'names.npz' to load known face encodes
@@ -65,12 +59,15 @@ def get_knownNames():
     for arrays in names:
         for array in arrays:
             known_names.append(array)
-    print(f"known names from file : \n{known_names}")
+    ##print(f"known names from file : \n{known_names}")
 
     return known_names
 
 
 def recognize_faces():
+    ## Read a video capture and compare encodes with the known encodes for a match 
+
+
     ## getting known face encodes
     known_faceEncodes = get_knownFaces() 
     known_names = get_knownNames()
@@ -90,20 +87,10 @@ def recognize_faces():
         
             if True in result:
                 index=result.index(True)
-                print(known_names[index])
+                ##print(known_names[index])
+                return True
             
 
         cv2.imshow('video frame',frame)
         if cv2.waitKey(1)==ord('q'):
             break
-
-def resetFiles():
-    known_directory="known_faces/"
-    try:
-        for fileName in os.listdir(known_directory):
-            os.rename(f"known_faces/{fileName}",f"new_faces/{fileName}")
-        print("files reseted successfully")
-    except:
-        print("something went  wrong when resetting files")
-
-main()
