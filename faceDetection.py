@@ -11,6 +11,7 @@ cap = cv2.VideoCapture("video/video.mp4")
 
 def load_newFaces():
     ## read new user images and store encodes in the encodes.npz file and user names in names.npz file
+
     known_faces=[]
     known_names=[]
     for fileName in os.listdir(directory):
@@ -18,7 +19,7 @@ def load_newFaces():
         ## encoding images of new faces (filetype=jpg)
         known_image = fr.load_image_file(f"new_faces/{fileName}")
         known_encoding = fr.face_encodings(known_image)[0]
-        ##print(f'known_encoding : \n {known_encoding}')
+        ## print(f'known_encoding : \n {known_encoding}')
         
         
         ## moving face images from new_faces to known_faces 
@@ -44,7 +45,7 @@ def get_knownFaces():
     for arrays in data:
         for array in arrays:
             known_faceEncodes.append(array)
-    ##print(f"known faces encodes from file : \n{known_faceEncodes}")
+    ## print(f"known faces encodes from file : \n{known_faceEncodes}")
 
     return known_faceEncodes
 
@@ -59,7 +60,7 @@ def get_knownNames():
     for arrays in names:
         for array in arrays:
             known_names.append(array)
-    ##print(f"known names from file : \n{known_names}")
+    ## print(f"known names from file : \n{known_names}")
 
     return known_names
 
@@ -75,7 +76,7 @@ def recognize_faces():
     while (cap.isOpened()):
         ret, frame = cap.read()
     
-        ## getting faces encodes from the video
+        ## getting faces encodes from the video frame
         face_locations=fr.face_locations(frame)
         faces_encoding = fr.face_encodings(frame,face_locations)     
         
@@ -87,7 +88,7 @@ def recognize_faces():
         
             if True in result:
                 index=result.index(True)
-                ##print(known_names[index])
+                ## print(known_names[index])
                 return True
             
 
