@@ -5,7 +5,7 @@ import cv2
 import os 
 import time
 import numpy as np
-from modal import *
+from model import *
 
 directory = "new_faces/"
 cap = cv2.VideoCapture("video/video.mp4")
@@ -13,7 +13,7 @@ cap = cv2.VideoCapture("video/video.mp4")
 
 
 def store_newFaces():
-    ## read new user images and store encodes in the encodes.npz file and user names in names.npz file
+    ## read new user images and store encodes in database
 
     known_faces=[]
     known_names=[]
@@ -33,28 +33,16 @@ def store_newFaces():
 
 
 
-## ---------this part for a back up data module (in files)----------------------
-
-    ## storing encoded data to the "encoding.npz" file
-    ## np.savez('encodes.npz',known_faces)
-    ## storing names to the "names.npz" file
-    ## np.savez('names.npz',known_names)
-##----------------------------------------------------------------
-
-
 
 def get_knownEncodes():
+    ## this function is will be remove when db implemented
     ## Loads encodes saved in encodes.npz into knwown_faceEncodes list  
 
     known_faceEncodes=[]
-
-    ## reading 'encodes.npz' to load known face encodes
-    data_inFile=np.load("encodes.npz")
-    data=[data_inFile[key] for key in data_inFile]
+    
     for arrays in data:
         for array in arrays:
             known_faceEncodes.append(array)
-    ## print(f"known faces encodes from file : \n{known_faceEncodes}")
 
     return known_faceEncodes
 
@@ -78,30 +66,29 @@ def get_knownNames():
 
 
 
-def compare_faces():
-    ## Read a video capture and compare encodes with the known encodes for a match 
+def recognize_face():
+    ## Read a video capture and compare encodes with the user encode 
 
+    id=int(input('\nEnter your id : ')) ## this will be provided from the cardscanner module as an argument 
 
-    ## getting known face encodes
-    known_faceEncodes = get_knownEncodes() 
-    known_names = get_knownNames()
+    ## get users face encode
+    known_faceEncode = extractData('users','encode','ID',id) 
 
     while (cap.isOpened()):
         ret, frame = cap.read()
     
         ## getting faces encodes from the video frame
         face_locations=fr.face_locations(frame)
-        faces_encoding = fr.face_encodings(frame,face_locations)     
+        faces_encodings = fr.face_encodings(frame,face_locations)     
         
         
 
         ## compare encodes for matches
-        for face in faces_encoding:
-            result=fr.compare_faces(known_faceEncodes,face)
+        for face in faces_encodings:
+            result=fr.compare_faces(known_faceEncode,face)
         
             if True in result:
-                index=result.index(True)
-                ## print(known_names[index])
+                print('Hello welcome to dr sobeck\'s lab')
                 return True
             
 

@@ -9,11 +9,11 @@ def main():
 
         if is_reset.lower()=='y':
             resetSystem()
-        storeload_newFaces()
-        compare_faces()
+        store_newFaces()
+        recognize_face()
     
     elif is_newUsers.lower()=='n':
-        recognize_faces()
+        recognize_face()
     
 
 
@@ -30,5 +30,6 @@ def resetSystem():
         print("files reseted successfully")
     except:
         print("something went  wrong when resetting files")
+
 
 main()

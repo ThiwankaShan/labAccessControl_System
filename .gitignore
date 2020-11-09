@@ -1,1 +1,5 @@
 gpuAcc_Test.py
+known_faces/
+new_faces/
+__pycache__/
+video/
