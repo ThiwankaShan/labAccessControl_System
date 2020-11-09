@@ -1,8 +1,9 @@
 from faceDetection import *  
+import sys
 
 def main():
     
-    is_newUsers=str(input("are there any new users? \nEnter y to yes \nEnter n to No\n"))
+    is_newUsers=str(input("\nare there any new users? \nEnter y to yes \nEnter n to No\nEnter q to exit\n"))
 
     if is_newUsers.lower()=='y':
 
@@ -10,7 +11,6 @@ def main():
         if is_reset.lower()=='y':
             resetSystem()
         create_user()
-        main()
     
     elif is_newUsers.lower()=='n':
         id=int(input('\nEnter your id : ')) ## this will be provided from the cardscanner module as an argument
@@ -19,17 +19,24 @@ def main():
             users = session.query(Users).filter(Users.id==id)
             for user in users:
                 userName = user.name
-            print(f"Acesss granted\n Welcome {userName}")
+            print('\n****************************************\n')
+            print(f"\nAcesss granted\nWelcome {userName}\n")
+            print('\n****************************************\n')
         else :
             print("Access denied")
-    
+    elif is_newUsers.lower()=='q':
+        sys.exit()
+
     else:
         print('input not valid')
-        main()
+    
+
 
 
 def resetSystem():
-    ## remove encodes.npz and names.npz data, move known_faces images to new_faces images
+    ## (deletes users table), move known_faces images to new_faces images
+    ## reset db will be implement instead of delete only users table 
+
 
     known_directory="known_faces/"
     try:
@@ -44,7 +51,7 @@ def resetSystem():
 def create_user():
     ## create new user and store user details in db
 
-    userName = str(input('Enter user name : '))
+    userName = str(input('\nEnter user name : '))
     regID = str(input("Enter registration id : ")) 
     encodes = generate_faceEncode(regID)
 
@@ -52,4 +59,5 @@ def create_user():
     session.add(userObj)
     session.commit()
 
-main()
+while True:
+    main()

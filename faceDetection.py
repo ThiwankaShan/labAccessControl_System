@@ -55,10 +55,16 @@ def recognize_face(id):
                 count=0
 
         if count>10:
+            cv2.destroyAllWindows()
+            cap.release() 
             return True
         elif frameCount >1000:
+            cv2.destroyAllWindows()
+            cap.release()
             return False     
             
         cv2.imshow('video frame',frame)
         if cv2.waitKey(1)==ord('q'):
+            cv2.destroyAllWindows()
+            cap.release() 
             break
