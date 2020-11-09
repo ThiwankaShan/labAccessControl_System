@@ -13,7 +13,7 @@ class Users(Base):
 
     id=Column(Integer,primary_key=True,autoincrement=True)
     name=Column(String(100))
-    encode=Column(String(200))
+    encode=Column(String(16000))
 
 Base.metadata.create_all(engine)
 

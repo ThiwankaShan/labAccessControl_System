@@ -9,13 +9,23 @@ def main():
 
         if is_reset.lower()=='y':
             resetSystem()
-        store_newFaces()
-        recognize_face()
+        create_user()
+        main()
     
     elif is_newUsers.lower()=='n':
-        recognize_face()
-    
+        id=int(input('\nEnter your id : ')) ## this will be provided from the cardscanner module as an argument
 
+        if recognize_face(id):        
+            users = session.query(Users).filter(Users.id==id)
+            for user in users:
+                userName = user.name
+            print(f"Acesss granted\n Welcome {userName}")
+        else :
+            print("Access denied")
+    
+    else:
+        print('input not valid')
+        main()
 
 
 def resetSystem():
@@ -25,11 +35,19 @@ def resetSystem():
     try:
         for fileName in os.listdir(known_directory):
             os.rename(f"known_faces/{fileName}",f"new_faces/{fileName}")
-        os.remove("encodes.npz")
-        os.remove("names.npz")
         print("files reseted successfully")
     except:
         print("something went  wrong when resetting files")
 
+def create_user():
+    ## create new user and store user details in db
+
+    userName = str(input('Enter user name : '))
+    regID = str(input("Enter registration id : ")) 
+    encodes = generate_faceEncode(regID)
+
+    userObj = Users(name=userName, id = regID, encode= jsonSerialize(encodes))
+    session.add(userObj)
+    session.commit()
 
 main()
