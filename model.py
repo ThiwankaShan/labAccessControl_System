@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 import numpy as np
 import json
 
-engine = create_engine("mysql://root@127.0.0.1/lab_acess?",echo = True)
+engine = create_engine("mysql://root@127.0.0.1/lab_acess?",echo = False)
 conn=engine.connect()
 Base=declarative_base()
 

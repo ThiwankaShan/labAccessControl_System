@@ -33,6 +33,8 @@ def resetSystem():
 
     known_directory="known_faces/"
     try:
+        Users.__table__.drop(engine)    
+        Base.metadata.create_all(engine)    
         for fileName in os.listdir(known_directory):
             os.rename(f"known_faces/{fileName}",f"new_faces/{fileName}")
         print("files reseted successfully")
