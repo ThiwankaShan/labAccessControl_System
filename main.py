@@ -5,8 +5,8 @@ def main():
     is_newUsers=str(input("are there any new users? \nEnter y to yes \nEnter n to No\n"))
 
     if is_newUsers.lower()=='y':
-        is_reset=str(input("\ndo you want to reset all the data files and start fresh? \nEnter y to yes \nEnter n to No\n"))
 
+        is_reset=str(input("\ndo you want to reset all the data files and start fresh? \nEnter y to yes \nEnter n to No\n"))
         if is_reset.lower()=='y':
             resetSystem()
         create_user()
