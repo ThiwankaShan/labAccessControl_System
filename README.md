@@ -7,8 +7,8 @@
 * Keep images in new_faces folder
 * Name images with users ID ` 5423.jpg`
 * Create a virtual environment : ` virtualenv venv`
-* Acrivate virtual environment source : ` venv/bin/activate`
-* Install dependencies : ` pip install -r requirments.txt`
+* Acrivate virtual environment: ` source venv/bin/activate`
+* Install dependencies : ` pip install -r requirements.txt`
 * Run main.py : ` python main.py`
 
 
