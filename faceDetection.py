@@ -29,15 +29,15 @@ def generate_faceEncode(id):
 def recognize_face(id):
     ## Read a video capture and compare encodes with the user encode return true or false
 
-##---get users face encode---------------------------
+    ## get users face encode
     users = session.query(Users).filter(Users.id==id)
     for user in users:
         userEncode = user.encode
-    userEncode = jsonDeserialize(userEncode)
-##---------------------------------------------------
+        userEncode = jsonDeserialize(userEncode)
 
-    count = 0 
-    frameCount=0 
+
+    match_count = 0 
+    frameCount = 0 
     while (cap.isOpened()):
         ret, frame = cap.read()
         frameCount+=1
@@ -50,11 +50,11 @@ def recognize_face(id):
         for face in faces_encodings:
             result=fr.compare_faces([userEncode],face)
             if True in result:
-                count += 1
+                match_count += 1
             else:
-                count=0
+                match_count = 0
 
-        if count>10:
+        if match_count>10:
             cv2.destroyAllWindows()
             cap.release() 
             return True

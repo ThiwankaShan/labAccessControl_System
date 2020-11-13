@@ -9,6 +9,7 @@
 * Create a virtual environment : ` virtualenv venv`
 * Acrivate virtual environment: ` source venv/bin/activate`
 * Install dependencies : ` pip install -r requirements.txt`
+* Configure database with config file
 * Run main.py : ` python main.py`
 
 

@@ -3,8 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import numpy as np
 import json
+from config import *
 
-engine = create_engine("mysql://root@127.0.0.1/lab_acess?",echo = False)
+engine = create_engine(f"{engine}://{user}@{host}/{name}?",echo = False)
 conn=engine.connect()
 Base=declarative_base()
 
