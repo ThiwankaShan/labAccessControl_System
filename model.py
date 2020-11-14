@@ -10,11 +10,12 @@ conn=engine.connect()
 Base=declarative_base()
 
 class Users(Base):
-    __tablename__="users"
+    __tablename__ = "users"
 
-    id=Column(Integer,primary_key=True,autoincrement=True)
-    name=Column(String(100))
-    encode=Column(String(16000))
+    id = Column(Integer,primary_key = True,autoincrement = True)
+    name = Column(String(100))
+    image_encodes = Column(String(16000))
+    card_encodes = Column(String(200))
 
 Base.metadata.create_all(engine)
 

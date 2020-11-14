@@ -1,4 +1,5 @@
 from faceDetection import *  
+from cardScanner import *
 import sys
 
 def main():
@@ -13,10 +14,16 @@ def main():
         create_user()
     
     elif is_newUsers.lower()=='n':
-        id=int(input('\nEnter your id : ')) ## this will be provided from the cardscanner module as an argument
+        ##id=int(input('\nEnter your id : ')) ## this will be provided from the cardscanner module as an argument
+        
+        scanner_gen = readCard()
+        result = ''
+        while (result == 'denied' or result == 'waiting' or result == ''):
+            result = scanner_gen.__next__()
+        card_encodes = result
 
-        if recognize_face(id):        
-            users = session.query(Users).filter(Users.id==id)
+        if recognize_face(card_encodes):        
+            users = session.query(Users).filter(Users.card_encodes==card_encodes)
             for user in users:
                 userName = user.name
             print('\n****************************************\n')
@@ -53,9 +60,9 @@ def create_user():
 
     userName = str(input('\nEnter user name : '))
     regID = str(input("Enter registration id : ")) 
-    encodes = generate_faceEncode(regID)
+    image_encodes = generate_faceEncode(regID)
 
-    userObj = Users(name=userName, id = regID, encode= jsonSerialize(encodes))
+    userObj = Users(name=userName, id = regID, image_encodes= jsonSerialize(image_encodes), card_encodes="71 255 242 50")
     session.add(userObj)
     session.commit()
 

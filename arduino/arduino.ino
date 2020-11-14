@@ -23,7 +23,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("main loop");
   while (true){
      if (rfid.isCard()) {
       if (rfid.readCardSerial()) {

@@ -30,9 +30,9 @@ def recognize_face(id):
     ## Read a video capture and compare encodes with the user encode return true or false
 
     ## get users face encode
-    users = session.query(Users).filter(Users.id==id)
+    users = session.query(Users).filter(Users.card_encodes==id)
     for user in users:
-        userEncode = user.encode
+        userEncode = user.image_encodes
         userEncode = jsonDeserialize(userEncode)
 
 
