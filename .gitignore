@@ -2,3 +2,5 @@ gpuAcc_Test.py
 __pycache__/
 video/
 labAcess/
+known_faces/
+new_faces/
