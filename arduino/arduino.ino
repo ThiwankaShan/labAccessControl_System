@@ -14,6 +14,7 @@ Servo Servo1;
 int buzzer = 8;
 
 String acess;
+String action;
 
 void setup()
 {
@@ -30,10 +31,9 @@ void loop()
 
   while (true)
   {
-
+    action = Serial.readStringUntil('\n');
     if (rfid.isCard())
     {
-
       if (rfid.readCardSerial())
       {
 
@@ -44,10 +44,35 @@ void loop()
 
       rfid.halt();
     }
+    else if(action == "open")
+    {
+      
+         Servo1.write(open_door);
+         
+         while (!Serial.available())
+         {
+           //waiting for a serial input
+         }
+
+         Servo1.write(close_door);
+         
+     }
+     else if(action == "close")
+     {
+      
+         Servo1.write(close_door);
+         
+         while (!Serial.available())
+         {
+           //waiting for a serial input
+         }
+         
+     }
   }
 
   while (!Serial.available())
   {
+    //waiting for a serial input
   }
   acess = Serial.readStringUntil('\n');
 
@@ -63,6 +88,29 @@ void loop()
 
     tone(buzzer, 500, 500);
     delay(1000);
+  }
+  else if(acess == "open"){
+      
+         Servo1.write(open_door);
+         
+         while (!Serial.available())
+         {
+           //waiting for a serial input
+         }
+
+         Servo1.write(close_door);
+         
+  }
+  else if(acess == "close")
+  {
+      
+         Servo1.write(close_door);
+         
+         while (!Serial.available())
+         {
+           //waiting for a serial input
+         }
+         
   }
 
   acess = '#';
