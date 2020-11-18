@@ -23,8 +23,8 @@ def main():
         while (result == 'denied' or result == 'waiting' or result == ''):
             result = scanner_gen.__next__()
         card_encodes = result
-
-        if recognize_face(card_encodes):
+        cam1 = FaceRecognition(2)
+        if cam1.recognize_face(card_encodes):
             users = session.query(Users).filter(
                 Users.card_encodes == card_encodes)
             for user in users:
