@@ -1,7 +1,7 @@
-from faceDetection import FaceRecognition
-from cardScanner import CardScanner
 from model import *
 from config import *
+from entrance import Entrance
+from faceDetection import FaceRecognition
 import sys
 
 
@@ -19,28 +19,10 @@ def main():
         create_user()
 
     elif is_newUsers.lower() == 'n':
-        ## reading scanner
-        scanner = CardScanner(serial_port)
-        scanner.readCard()
-        result = ''
-        while (result == 'denied' or result == 'waiting' or result == ''):
-            result = scanner.readCard().__next__()
-        card_encodes = result
-
-        ## reading camera
-        cam = FaceRecognition(2)
-        if cam.recognize_face(card_encodes):
-            users = session.query(Users).filter(
-                Users.card_encodes == card_encodes)
-            for user in users:
-                userName = user.name
-
-            print('\n****************************************\n')
-            print(f"\nAcesss granted\nWelcome {userName}\n")
-            print('\n****************************************\n')
-
-        else:
-            print("Access denied")
+        
+        entrance_1 = Entrance(1,serial_port,camera_port)
+        entrance_1.generalMode()
+        
 
     elif is_newUsers.lower() == 'q':
         sys.exit()
@@ -70,7 +52,7 @@ def create_user():
     userName = str(input('\nEnter user name : '))
     regID = str(input("Enter registration id : "))
     card_encode = str(input("Enter card id : "))
-    image_encodes = generate_faceEncode(regID)
+    image_encodes = FaceRecognition(camera_port).generate_faceEncode(regID)
 
     userObj = Users(name=userName, id=regID, image_encodes=jsonSerialize(
         image_encodes), card_encodes=card_encode)

@@ -21,10 +21,10 @@ class CardScanner:
         while (True):
             value = self.ardunioSerial.readline()
             value = value.decode('utf-8')[:13]
-            print('arduino output'+value)
+            #print('arduino output {value} \n')
 
             if value in id_arr:
-                print('from python true')
+                #print('from python true \n')
                 self.ardunioSerial.write('granted\n'.encode())
                 result = value
             elif len(value) != 13:
@@ -32,7 +32,7 @@ class CardScanner:
                 result = 'waiting'
                 pass
             else:
-                print(f"from python false when value {value}")
+                #print(f"from python false when value {value} \n")
                 self.ardunioSerial.write('denied\n'.encode())
                 result = 'denied'
 

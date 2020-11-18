@@ -8,13 +8,13 @@ from model import *
 
 class FaceRecognition:
 
-    def __init__(self,camID):
-        #self.adress = adress        # use to get the video input from a ip adress (implement in a future build)
-        self.cap = cv2.VideoCapture("video/video.mp4")
-        self.id = camID
+    def __init__(self,camport):
+        self.port = camport 
+        self.cap = cv2.VideoCapture(f"{self.port}")
+       
 
 
-    def generate_faceEncode(self,userID,new_dir="new_faces",known_dir="known_faces/"):
+    def generate_faceEncode(self,userID,new_dir="new_faces/",known_dir="known_faces/"):
         # read new user images and return encodes
 
         # encoding images of new user (filetype=jpg)
@@ -63,16 +63,13 @@ class FaceRecognition:
             print(f"match count : {match_count}")
             if match_count > 10:
                 cv2.destroyAllWindows()
-                self.cap.release()
                 return True
             elif frameCount > 1000:
                 cv2.destroyAllWindows()
-                self.cap.release()
                 return False
 
             cv2.imshow('video frame', frame)
             if cv2.waitKey(1) == ord('q'):
                 cv2.destroyAllWindows()
-                self.cap.release()
                 break
         
