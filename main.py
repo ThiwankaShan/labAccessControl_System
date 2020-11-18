@@ -1,5 +1,7 @@
-from faceDetection import *
-from cardScanner import *
+from faceDetection import FaceRecognition
+from cardScanner import CardScanner
+from model import *
+from config import *
 import sys
 
 
@@ -17,14 +19,17 @@ def main():
         create_user()
 
     elif is_newUsers.lower() == 'n':
-
-        scanner_gen = readCard()
+        ## reading scanner
+        scanner = CardScanner(serial_port)
+        scanner.readCard()
         result = ''
         while (result == 'denied' or result == 'waiting' or result == ''):
-            result = scanner_gen.__next__()
+            result = scanner.readCard().__next__()
         card_encodes = result
-        cam1 = FaceRecognition(2)
-        if cam1.recognize_face(card_encodes):
+
+        ## reading camera
+        cam = FaceRecognition(2)
+        if cam.recognize_face(card_encodes):
             users = session.query(Users).filter(
                 Users.card_encodes == card_encodes)
             for user in users:

@@ -7,4 +7,4 @@ host = "127.0.0.1"
 
 
 # card scanner
-serial_port = "/dev/ttyACM1"
+serial_port = "/dev/ttyACM0"
