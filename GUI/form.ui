@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>FormWindow</class>
+ <widget class="QMainWindow" name="FormWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -522,7 +522,7 @@
       <string>ID Number   </string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="lineEdit_name">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -977,7 +977,7 @@
       <string/>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="lineEdit_id">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -1513,7 +1513,7 @@
       <string>Cancel</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="pushButton_ok">
      <property name="geometry">
       <rect>
        <x>670</x>
@@ -1529,7 +1529,7 @@
       <string>Ok</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="label_nameError">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -1542,7 +1542,7 @@
       <string>Error message</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="label_idError">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -1555,7 +1555,7 @@
       <string>Error message</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_7">
+    <widget class="QLabel" name="label_uploadError">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -1566,6 +1566,24 @@
      </property>
      <property name="text">
       <string>Error message</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_message">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>0</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Successfully added</string>
      </property>
     </widget>
    </widget>
