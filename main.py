@@ -74,9 +74,11 @@ class controlPanel():
 
 
     def main():
-        entrance_1 = Entrance(1,serial_port,camera_port)
+        entrance = Entrance(1,serial_port,camera_port)
         def general_mode(entrance):
             entrance.generalMode()
         
-        th = threading.Thread(target=general_mode,args=(entrance_1,))
+        th = threading.Thread(target=general_mode,args=(entrance,))
         th.start()
+
+        return entrance

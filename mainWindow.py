@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.uic import loadUi 
 from formWindow import FormWindow   
 import sys
+from main import *
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -37,21 +38,22 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def clickButton_reset(self):
         print("clicked reset")
+        controlPanel.resetSystem()
     
     def clickButton_onOff(self):
         print("clicked on/off")
-        self.entrance_1 = Entrance(1,serial_port,camera_port)
+        self.entrances = controlPanel.main()
     
     def clickButton_emergency(self):
         print(f"clicked emergency")
 
     def clickButton_ManuallyOpen(self):
         print(f"clicked manually open")
-        self.entrance_1.cardScanner.ardunioSerial.write('open'.encode())
+        self.entrances.cardScanner.ardunioSerial.write('open'.encode())
     
     def clickButton_ManuallyClose(self):
         print(f"clicked manually close")
-        self.entrance_1.cardScanner.ardunioSerial.write('close'.encode())
+        self.entrances.cardScanner.ardunioSerial.write('close'.encode())
     
     def clickButton_users(self):
         print("clicked users")
