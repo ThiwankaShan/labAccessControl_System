@@ -1,50 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.uic import loadUi
+from PyQt5.uic import loadUi 
+from formWindow import FormWindow   
 import sys
-from main import *
-
-class formWindow(QtWidgets.QMainWindow):
-
-    def __init__(self):
-        super(formWindow, self).__init__()
-        self.ui = loadUi('GUI/form.ui',self)
-        self.ui.show()
-
-        self.submitButton = self.ui.pushButton_ok
-        self.submitButton.clicked.connect(self.clickButton_ok)
-
-        self.lineName = self.ui.lineEdit_name
-        self.lineID = self.ui.lineEdit_id
-
-        self.labelNameError = self.ui.label_nameError
-        self.labelIDError = self.ui.label_idError
-        self.labelMessage = self.ui.label_message
-
-    def clickButton_ok(self):
-        print('clicked ok button')
-        print(f'name : {self.lineName.text()}')
-        print(f'id : {self.lineID.text()}')
-
-        name = self.lineName.text()
-        id = self.lineID.text()
-        validation = self.validate(name,id)
-    
-    def validate(self,name,id):
-
-        if name != 'shan': 
-            self.labelNameError.setText('Invalid Name')
-            return False
-
-        if id != '17apc3111':
-            self.labelIDError.setText('Invalid id')
-            return False
-        
-        else:
-            print('validated')
-            self.labelMessage.setText('Sucessfull')
-            return True
-            
-
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -64,19 +21,42 @@ class MainWindow(QtWidgets.QMainWindow):
         self.usersButton = self.ui.pushButton_users
         self.usersButton.clicked.connect(self.clickButton_users)
 
+        self.emergencyButton = self.ui.pushButton_EmergencyMode
+        self.emergencyButton.clicked.connect(self.clickButton_emergency)
+
+        self.manualOpenButton = self.ui.pushButton_manualOpen
+        self.manualOpenButton.clicked.connect(self.clickButton_ManuallyOpen)
+
+        self.manualCloseButton = self.ui.pushButton_manualClose
+        self.manualCloseButton.clicked.connect(self.clickButton_ManuallyClose)
+
+        self.labelStatus = self.ui.label_status
+
     def clickButton_logs(self):
         print("clicked logs")
 
     def clickButton_reset(self):
         print("clicked reset")
-        controlPanel.resetSystem()
     
     def clickButton_onOff(self):
         print("clicked on/off")
+        self.entrance_1 = Entrance(1,serial_port,camera_port)
+    
+    def clickButton_emergency(self):
+        print(f"clicked emergency")
+
+    def clickButton_ManuallyOpen(self):
+        print(f"clicked manually open")
+        self.entrance_1.cardScanner.ardunioSerial.write('open'.encode())
+    
+    def clickButton_ManuallyClose(self):
+        print(f"clicked manually close")
+        self.entrance_1.cardScanner.ardunioSerial.write('close'.encode())
     
     def clickButton_users(self):
         print("clicked users")
-        formWindow()
+        FormWindow()
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

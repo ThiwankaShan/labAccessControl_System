@@ -1,8 +1,7 @@
 # facedetection module
 
 import face_recognition as fr
-import cv2
-import os
+import cv2 
 import numpy as np
 from model import *
 
@@ -11,8 +10,6 @@ class FaceRecognition:
     def __init__(self,camport):
         self.port = camport 
         self.cap = cv2.VideoCapture(f"{self.port}")
-       
-
 
     def generate_faceEncode(self,userID,new_dir="new_faces/",known_dir="known_faces/"):
         # read new user images and return encodes
@@ -62,14 +59,13 @@ class FaceRecognition:
                     match_count = 0
             print(f"match count : {match_count}")
             if match_count > 10:
-                cv2.destroyAllWindows()
+                #cv2.destroyAllWindows()
                 return True
             elif frameCount > 1000:
-                cv2.destroyAllWindows()
+                #cv2.destroyAllWindows()
                 return False
 
-            cv2.imshow('video frame', frame)
-            if cv2.waitKey(1) == ord('q'):
-                cv2.destroyAllWindows()
-                break
-        
+           # cv2.imshow('video frame', frame)
+           # if cv2.waitKey(1) == ord('q'):
+           #     cv2.destroyAllWindows()
+           #     break
