@@ -9,7 +9,7 @@ import threading
 class ControlPanel():
 
     print('control panel : class attributes created')
-    entrance = 'hello entrance'
+    entrance = 'hello user from control panel'
 
     @classmethod
     def resetSystem(cls):
@@ -54,7 +54,7 @@ class ControlPanel():
         pass
 
     @classmethod
-    def emergencyMode(cls):
+    def emergencyMode(cls,status):
         print('emergency method fired')
         pass
 

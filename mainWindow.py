@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.uic import loadUi 
 from formWindow import FormWindow
 from controlPanel import ControlPanel   
+from adminAuthForm import AuthFormWindow
 import sys
 
 
@@ -33,6 +34,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.manualCloseButton.clicked.connect(self.clickButton_ManuallyClose)
 
         self.labelStatus = self.ui.label_status
+        self.status = 'DeActive'
 
     def clickButton_logs(self):
         print("clicked logs")
@@ -43,10 +45,36 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def clickButton_onOff(self):
         print("clicked on/off")
-        ControlPanel.start()
+
+        if self.status == 'Active':
+            ControlPanel.stop()
+            self.status = 'DeActivate'
+            self.labelStatus.setStyleSheet('color: red')
+
+        else:
+            if self.status == 'emergencyMode':   
+                if AuthFormWindow().exec_():
+                    ControlPanel.emergencyMode(self.status)
+                    ControlPanel.start()
+                    self.status = 'Active'
+                    self.labelStatus.setStyleSheet('color: LawnGreen')
+                    self.labelStatus.setText(self.status)
+                else:
+                    pass
+
+            elif self.status == 'lockDownMode':
+                ControlPanel.lockdownMode(self.status)
+                ControlPanel.start()
+                self.status = 'Active'
+                self.labelStatus.setStyleSheet('color: LawnGreen')
+   
     
     def clickButton_emergency(self):
         print(f"clicked emergency")
+        self.status = 'emergencyMode'
+        self.labelStatus.setText('Emergency\n      Mode')
+        self.labelStatus.setStyleSheet('color: red')
+        ControlPanel.emergencyMode(self.status)
 
     def clickButton_ManuallyOpen(self):
         print(f"clicked manually open")
