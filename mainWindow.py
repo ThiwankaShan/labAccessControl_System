@@ -1,8 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.uic import loadUi 
-from formWindow import FormWindow   
+from formWindow import FormWindow
+from controlPanel import ControlPanel   
 import sys
-from main import *
+
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -38,11 +39,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def clickButton_reset(self):
         print("clicked reset")
-        controlPanel.resetSystem()
+        ControlPanel.resetSystem()
     
     def clickButton_onOff(self):
         print("clicked on/off")
-        self.entrances = controlPanel.main()
+        ControlPanel.start()
     
     def clickButton_emergency(self):
         print(f"clicked emergency")
