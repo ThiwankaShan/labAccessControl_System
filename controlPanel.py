@@ -5,11 +5,11 @@ from cardScanner import CardScanner
 from entrance import Entrance
 import sys
 import threading
+import multiprocessing
 
 class ControlPanel():
-
-    print('control panel : class attributes created')
-    entrance = 'hello user from control panel'
+    mode = 'general'
+    entrance = Entrance(1,serial_port,camera_port)
 
     @classmethod
     def resetSystem(cls):
@@ -45,14 +45,15 @@ class ControlPanel():
     @classmethod
     def start(cls):
         print('start method fired')
-        th = threading.Thread(target=cls.generalMode,args=())
-        th.start()
+        cls.p = multiprocessing.Process(target=cls.generalMode,args=(cls.entrance,))
+        cls.p.start()
     
     @classmethod
     def stop(cls):
         print('stop method fired')
-        pass
-
+        cls.p.terminate()
+        
+        
     @classmethod
     def emergencyMode(cls,status):
         print('emergency method fired')
@@ -64,10 +65,24 @@ class ControlPanel():
         pass
     
     @classmethod
-    def generalMode(cls):
+    def generalMode(cls,entrance):
         print('generalMode method fired')
-        pass
+        entrance.generalMode()
+    
 
+    @classmethod    
+    def manualOpen(cls):
+        print('manual open method fired')
+        cls.entrance.cardScanner.ardunioSerial.write('open'.encode())
+
+    @classmethod
+    def manualClose(cls):
+        print('manual close method fired')
+        cls.entrance.cardScanner.ardunioSerial.write('close'.encode())
+
+        
+            
+        
 
 '''
 def main():

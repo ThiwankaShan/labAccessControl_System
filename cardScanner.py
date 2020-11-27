@@ -27,7 +27,7 @@ class CardScanner:
                 #print('from python true \n')
                 self.ardunioSerial.write('granted\n'.encode())
                 result = value
-            elif len(value) != 13:
+            elif len(value) < 9:
                 #print(f"junk value : {value}")
                 result = 'waiting'
                 pass

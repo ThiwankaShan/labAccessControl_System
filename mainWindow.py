@@ -3,6 +3,7 @@ from PyQt5.uic import loadUi
 from formWindow import FormWindow
 from controlPanel import ControlPanel   
 from adminAuthForm import AuthFormWindow
+import threading
 import sys
 
 
@@ -47,10 +48,12 @@ class MainWindow(QtWidgets.QMainWindow):
         print("clicked on/off")
 
         if self.status == 'Active':
+            print('deactivation fired')
             ControlPanel.stop()
             self.status = 'DeActivate'
             self.labelStatus.setStyleSheet('color: red')
-
+            self.labelStatus.setText(self.status)
+            
         else:
             if self.status == 'emergencyMode':   
                 if AuthFormWindow().exec_():
@@ -60,13 +63,24 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.labelStatus.setStyleSheet('color: LawnGreen')
                     self.labelStatus.setText(self.status)
                 else:
-                    pass
+                    self.labelStatus.setText('Emergency\n      Mode')
 
             elif self.status == 'lockDownMode':
-                ControlPanel.lockdownMode(self.status)
+                if AuthFormWindow().exec_():
+                    ControlPanel.lockdownMode(self.status)
+                    ControlPanel.start()
+                    self.status = 'Active'
+                    self.labelStatus.setStyleSheet('color: LawnGreen')
+                    self.labelStatus.setText(self.status)
+                else:
+                    self.labelStatus.setText('Lock Down\n      Mode')
+            
+            else:
                 ControlPanel.start()
                 self.status = 'Active'
                 self.labelStatus.setStyleSheet('color: LawnGreen')
+                self.labelStatus.setText(self.status)
+        
    
     
     def clickButton_emergency(self):
@@ -78,11 +92,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def clickButton_ManuallyOpen(self):
         print(f"clicked manually open")
-        self.entrances.cardScanner.ardunioSerial.write('open'.encode())
+        ControlPanel.manualOpen()
+        
     
     def clickButton_ManuallyClose(self):
         print(f"clicked manually close")
-        self.entrances.cardScanner.ardunioSerial.write('close'.encode())
+        ControlPanel.manualClose()
+        
     
     def clickButton_users(self):
         print("clicked users")
@@ -94,3 +110,4 @@ if __name__ == '__main__':
     window = MainWindow()
     window.ui.show()
     app.exec_()
+    

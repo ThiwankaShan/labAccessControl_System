@@ -9,7 +9,6 @@ class FaceRecognition:
 
     def __init__(self,camport):
         self.port = camport 
-        self.cap = cv2.VideoCapture(f"{self.port}")
 
     def generate_faceEncode(self,userID,new_dir="new_faces/",known_dir="known_faces/"):
         # read new user images and return encodes
@@ -28,6 +27,7 @@ class FaceRecognition:
 
 
     def recognize_face(self,id):
+        self.cap = cv2.VideoCapture(f"{self.port}")
         # Read a video capture and compare encodes with the user encode return true or false
 
         # get users face encode

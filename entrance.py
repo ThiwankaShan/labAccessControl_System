@@ -1,20 +1,19 @@
 from cardScanner import CardScanner
 from faceDetection import FaceRecognition
 from model import *
+import time
 
 class Entrance:
 
     def __init__(self,id,scanner_port,cam_port):
 
         self.id = id
-        self.general_mode = True 
         self.cardScanner = CardScanner(scanner_port)
         self.camScanner = FaceRecognition(camera_port)
     
     def generalMode(self):
 
-        while self.generalMode:
-
+        while True:
             ## card scanner
             self.cardScanner.readCard()
             result = 'waiting'
@@ -35,3 +34,6 @@ class Entrance:
 
             else:
                 print("Access denied")
+      
+
+            
