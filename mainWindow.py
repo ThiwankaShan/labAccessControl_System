@@ -50,7 +50,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.status == 'Active':
             print('deactivation fired')
             ControlPanel.stop()
-            self.status = 'DeActivate'
+            self.status = 'DeActive'
             self.labelStatus.setStyleSheet('color: red')
             self.labelStatus.setText(self.status)
             
@@ -58,7 +58,7 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.status == 'emergencyMode':   
                 if AuthFormWindow().exec_():
                     ControlPanel.emergencyMode(self.status)
-                    ControlPanel.start()
+                    ControlPanel.start(self.status)
                     self.status = 'Active'
                     self.labelStatus.setStyleSheet('color: LawnGreen')
                     self.labelStatus.setText(self.status)
@@ -68,15 +68,20 @@ class MainWindow(QtWidgets.QMainWindow):
             elif self.status == 'lockDownMode':
                 if AuthFormWindow().exec_():
                     ControlPanel.lockdownMode(self.status)
-                    ControlPanel.start()
+                    ControlPanel.start(self.status)
                     self.status = 'Active'
                     self.labelStatus.setStyleSheet('color: LawnGreen')
                     self.labelStatus.setText(self.status)
                 else:
                     self.labelStatus.setText('Lock Down\n      Mode')
-            
+
+            elif self.status == "Manual":
+                self.status = 'Active'
+                self.labelStatus.setStyleSheet('color: LawnGreen')
+                self.labelStatus.setText(self.status)
+                ControlPanel.start(self.status)
             else:
-                ControlPanel.start()
+                ControlPanel.start(self.status)
                 self.status = 'Active'
                 self.labelStatus.setStyleSheet('color: LawnGreen')
                 self.labelStatus.setText(self.status)
@@ -92,11 +97,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def clickButton_ManuallyOpen(self):
         print(f"clicked manually open")
+        self.status = "Manual"
+        self.labelStatus.setStyleSheet('color: Gold')
+        self.labelStatus.setText(self.status)
         ControlPanel.manualOpen()
         
     
     def clickButton_ManuallyClose(self):
         print(f"clicked manually close")
+        self.status = "Manual"
+        self.labelStatus.setStyleSheet('color: Gold')
+        self.labelStatus.setText(self.status)
         ControlPanel.manualClose()
         
     

@@ -8,7 +8,7 @@ import threading
 import multiprocessing
 
 class ControlPanel():
-    mode = 'general'
+    #mode = 'deactive'
     entrance = Entrance(1,serial_port,camera_port)
 
     @classmethod
@@ -43,14 +43,19 @@ class ControlPanel():
 
 
     @classmethod
-    def start(cls):
+    def start(cls,mode):
         print('start method fired')
-        cls.p = multiprocessing.Process(target=cls.generalMode,args=(cls.entrance,))
-        cls.p.start()
+        if mode == 'DeActive':
+            cls.p = multiprocessing.Process(target=cls.generalMode,args=(cls.entrance,))
+            cls.p.start()
+
+        else:
+            cls.entrance.cardScanner.ardunioSerial.write('break'.encode())
     
     @classmethod
     def stop(cls):
         print('stop method fired')
+        #cls.mode = 'deactive'
         cls.p.terminate()
         
         
@@ -73,11 +78,13 @@ class ControlPanel():
     @classmethod    
     def manualOpen(cls):
         print('manual open method fired')
+        #cls.mode = 'manual'
         cls.entrance.cardScanner.ardunioSerial.write('open'.encode())
 
     @classmethod
     def manualClose(cls):
         print('manual close method fired')
+        #cls.mode = 'manual'
         cls.entrance.cardScanner.ardunioSerial.write('close'.encode())
 
         

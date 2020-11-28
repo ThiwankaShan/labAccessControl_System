@@ -23,7 +23,7 @@ class Entrance:
             print(f"card encodes confirmed for: {card_encodes}")
 
             ## camera face recognition 
-            if self.camScanner.recognize_face(card_encodes):
+            if True: #self.camScanner.recognize_face(card_encodes):
                 users = session.query(Users).filter(Users.card_encodes == card_encodes)
                 for user in users:
                     userName = user.name
