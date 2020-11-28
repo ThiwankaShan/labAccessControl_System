@@ -44,6 +44,7 @@ class ControlPanel():
 
     @classmethod
     def start(cls,mode):
+        ## start geral mode process or break other mode 
         print('start method fired')
         if mode == 'DeActive':
             cls.p = multiprocessing.Process(target=cls.generalMode,args=(cls.entrance,))
@@ -54,37 +55,42 @@ class ControlPanel():
     
     @classmethod
     def stop(cls):
+        ## stop general mode
         print('stop method fired')
-        #cls.mode = 'deactive'
         cls.p.terminate()
         
         
     @classmethod
-    def emergencyMode(cls,status):
+    def emergencyMode(cls):
+        ## start emergency mode and haults
         print('emergency method fired')
-        pass
+        cls.entrance.cardScanner.ardunioSerial.write('open'.encode())
+        
 
     @classmethod
     def lockdownMode(cls):
+        ## start lockdown mode and haults
         print('lockdown method fired')
-        pass
+        cls.entrance.cardScanner.ardunioSerial.write('close'.encode())
+    
     
     @classmethod
     def generalMode(cls,entrance):
+        ## start general mode 
         print('generalMode method fired')
         entrance.generalMode()
     
 
     @classmethod    
     def manualOpen(cls):
+        ## manually open door
         print('manual open method fired')
-        #cls.mode = 'manual'
         cls.entrance.cardScanner.ardunioSerial.write('open'.encode())
 
     @classmethod
     def manualClose(cls):
+        ## manually close door
         print('manual close method fired')
-        #cls.mode = 'manual'
         cls.entrance.cardScanner.ardunioSerial.write('close'.encode())
 
         

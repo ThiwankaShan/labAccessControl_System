@@ -25,8 +25,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.usersButton = self.ui.pushButton_users
         self.usersButton.clicked.connect(self.clickButton_users)
 
-        self.emergencyButton = self.ui.pushButton_EmergencyMode
+        self.emergencyButton = self.ui.pushButton_emergencyMode
         self.emergencyButton.clicked.connect(self.clickButton_emergency)
+
+        self.lockdownButton = self.ui.pushButton_lockdownMode
+        self.lockdownButton.clicked.connect(self.clickButton_lockDown)
 
         self.manualOpenButton = self.ui.pushButton_manualOpen
         self.manualOpenButton.clicked.connect(self.clickButton_ManuallyOpen)
@@ -57,7 +60,6 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             if self.status == 'emergencyMode':   
                 if AuthFormWindow().exec_():
-                    ControlPanel.emergencyMode(self.status)
                     ControlPanel.start(self.status)
                     self.status = 'Active'
                     self.labelStatus.setStyleSheet('color: LawnGreen')
@@ -67,7 +69,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
             elif self.status == 'lockDownMode':
                 if AuthFormWindow().exec_():
-                    ControlPanel.lockdownMode(self.status)
                     ControlPanel.start(self.status)
                     self.status = 'Active'
                     self.labelStatus.setStyleSheet('color: LawnGreen')
@@ -93,7 +94,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.status = 'emergencyMode'
         self.labelStatus.setText('Emergency\n      Mode')
         self.labelStatus.setStyleSheet('color: red')
-        ControlPanel.emergencyMode(self.status)
+        ControlPanel.emergencyMode()
+
+    def clickButton_lockDown(self):
+        print(f"clicked lockdown")
+        self.status = 'lockdownMode'
+        self.labelStatus.setText('Lockdown\n      Mode')
+        self.labelStatus.setStyleSheet('color: red')
+        ControlPanel.lockdownMode()
 
     def clickButton_ManuallyOpen(self):
         print(f"clicked manually open")

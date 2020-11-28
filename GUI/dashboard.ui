@@ -2230,7 +2230,7 @@ Open</string>
 Close</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_EmergencyMode">
+    <widget class="QPushButton" name="pushButton_emergencyMode">
      <property name="geometry">
       <rect>
        <x>20</x>
