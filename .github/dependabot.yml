@@ -1,0 +1,40 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "23:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: sqlalchemy
+    versions:
+    - 1.3.22
+    - 1.3.23
+    - 1.4.0
+    - 1.4.1
+    - 1.4.10
+    - 1.4.2
+    - 1.4.3
+    - 1.4.4
+    - 1.4.5
+    - 1.4.6
+    - 1.4.7
+    - 1.4.8
+    - 1.4.9
+  - dependency-name: pillow
+    versions:
+    - 8.1.0
+    - 8.1.1
+    - 8.1.2
+  - dependency-name: pyqt5
+    versions:
+    - 5.15.3
+  - dependency-name: numpy
+    versions:
+    - 1.19.5
+    - 1.20.0
+    - 1.20.1
+  - dependency-name: dlib
+    versions:
+    - 19.21.1
